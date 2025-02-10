@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ffe6e6, #ffb3b3);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            color: #ff4d4d;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        .buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .btn-yes {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        .btn-no {
+            background-color: #cccccc;
+            color: #666666;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+        }
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.6;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        .hidden {
+            display: none;
+        }
+        #response {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            color: #ff4d4d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will You Be My Valentine?</h1>
+        <img src="/api/placeholder/200/200" alt="Hearts" />
+        <div class="buttons">
+            <button class="btn btn-yes" onclick="sayYes()">Yes!</button>
+            <button class="btn btn-no" id="noBtn" onmouseover="moveButton()">No</button>
+        </div>
+        <div id="response" class="hidden">
+            <p>Yay! ❤️ You've made me the happiest person!</p>
+        </div>
+    </div>
+
+    <script>
+        function sayYes() {
+            document.querySelector('.buttons').style.display = 'none';
+            document.getElementById('response').classList.remove('hidden');
+            createHearts();
+        }
+
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const container = document.querySelector('.container');
+            const maxX = container.clientWidth - btn.clientWidth;
+            const maxY = container.clientHeight - btn.clientHeight;
+            
+            btn.style.position = 'absolute';
+            btn.style.left = Math.random() * maxX + 'px';
+            btn.style.top = Math.random() * maxY + 'px';
+        }
+
+        function createHearts() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.className = 'heart';
+                    heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = Math.random() * 100 + 'vh';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 6000);
+                }, i * 300);
+            }
+        }
+    </script>
+</body>
+</html>
